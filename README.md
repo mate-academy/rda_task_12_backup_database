@@ -1,6 +1,6 @@
 # Backup and Restore Database
 
-`mysqldupm` can be a very handy tool, and you will see it while working on this task. You will deal with 3 databases, all hosted on the same server: 
+`mysqldump` can be a very handy tool, and you will see it while working on this task. You will deal with 3 databases, all hosted on the same server: 
 
 - `ShopDB` is a production database for online shopping. This is the database with real user data. 
 - `ShopDBReserve` is a copy of the production database used for fast disaster recovery. 
