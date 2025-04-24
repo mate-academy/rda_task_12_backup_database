@@ -9,125 +9,125 @@ CREATE TABLE Products (
 
 -- Create test data in Products table 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct1'); 
+	VALUES ('AwesomeProduct1'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct2'); 
+	VALUES ('AwesomeProduct2'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct3'); 
+	VALUES ('AwesomeProduct3'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct4'); 
+	VALUES ('AwesomeProduct4'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct5'); 
+	VALUES ('AwesomeProduct5'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct6'); 
+	VALUES ('AwesomeProduct6'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct7'); 
+	VALUES ('AwesomeProduct7'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct8'); 
+	VALUES ('AwesomeProduct8'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct9'); 
+	VALUES ('AwesomeProduct9'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct10'); 
+	VALUES ('AwesomeProduct10'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct11'); 
+	VALUES ('AwesomeProduct11'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct12'); 
+	VALUES ('AwesomeProduct12'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct13'); 
+	VALUES ('AwesomeProduct13'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct14'); 
+	VALUES ('AwesomeProduct14'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct15'); 
+	VALUES ('AwesomeProduct15'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct16'); 
+	VALUES ('AwesomeProduct16'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct17'); 
+	VALUES ('AwesomeProduct17'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct18'); 
+	VALUES ('AwesomeProduct18'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct19'); 
+	VALUES ('AwesomeProduct19'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct20'); 
+	VALUES ('AwesomeProduct20'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct21'); 
+	VALUES ('AwesomeProduct21'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct22'); 
+	VALUES ('AwesomeProduct22'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct23'); 
+	VALUES ('AwesomeProduct23'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct24'); 
+	VALUES ('AwesomeProduct24'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct25'); 
+	VALUES ('AwesomeProduct25'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct26'); 
+	VALUES ('AwesomeProduct26'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct27'); 
+	VALUES ('AwesomeProduct27'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct28'); 
+	VALUES ('AwesomeProduct28'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct29'); 
+	VALUES ('AwesomeProduct29'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct30'); 
+	VALUES ('AwesomeProduct30'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct31'); 
+	VALUES ('AwesomeProduct31'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct32'); 
+	VALUES ('AwesomeProduct32'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct33'); 
+	VALUES ('AwesomeProduct33'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct34'); 
+	VALUES ('AwesomeProduct34'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct35'); 
+	VALUES ('AwesomeProduct35'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct36'); 
+	VALUES ('AwesomeProduct36'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct37'); 
+	VALUES ('AwesomeProduct37'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct38'); 
+	VALUES ('AwesomeProduct38'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct39'); 
+	VALUES ('AwesomeProduct39'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct40'); 
+	VALUES ('AwesomeProduct40'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct41'); 
+	VALUES ('AwesomeProduct41'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct42'); 
+	VALUES ('AwesomeProduct42'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct43'); 
+	VALUES ('AwesomeProduct43'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct44'); 
+	VALUES ('AwesomeProduct44'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct45'); 
+	VALUES ('AwesomeProduct45'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct46'); 
+	VALUES ('AwesomeProduct46'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct47'); 
+	VALUES ('AwesomeProduct47'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct48'); 
+	VALUES ('AwesomeProduct48'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct49'); 
+	VALUES ('AwesomeProduct49'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct50'); 
+	VALUES ('AwesomeProduct50'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct51'); 
+	VALUES ('AwesomeProduct51'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct52'); 
+	VALUES ('AwesomeProduct52'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct53'); 
+	VALUES ('AwesomeProduct53'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct54'); 
+	VALUES ('AwesomeProduct54'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct55'); 
+	VALUES ('AwesomeProduct55'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct56'); 
+	VALUES ('AwesomeProduct56'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct57'); 
+	VALUES ('AwesomeProduct57'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct58'); 
+	VALUES ('AwesomeProduct58'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct59'); 
+	VALUES ('AwesomeProduct59'); 
 INSERT INTO Products (Name)
-	VALUES ('AwersomeProduct60'); 
+	VALUES ('AwesomeProduct60'); 
 
 
 -- create databases where data should be restored 
