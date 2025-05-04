@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 set -euo pipefail
 
 DB_USER="${DB_USER:?Environment variable DB_USER is not set}"
