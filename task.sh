@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Перевірка наявності змінних середовища
 if [[ -z "$DB_USER" || -z "$DB_PASSWORD" ]]; then
   echo "❌ Помилка: Змінні середовища DB_USER або DB_PASSWORD не задані."
