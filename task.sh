@@ -28,7 +28,7 @@ echo "$(date) - Restoring full backup to ShopDBReserve..."
 MYSQL_PWD="$DB_PASSWORD" mysql -u"$DB_USER" ShopDBReserve < "$FULL_DUMP"
 
 echo "$(date) - Starting data-only backup from ShopDB..."
-MYSQL_PWD="$DB_PASSWORD" mysqldump -u"$DB_USER" --no-create-info ShopDB \
+MYSQL_PWD="$DB_PASSWORD" mysqldump -u"$DB_USER" --no-create-info --replace ShopDB \
   | sed '/^USE /d' > "$DATA_DUMP"
 
 echo "$(date) - Restoring data-only backup to ShopDBDevelopment..."
