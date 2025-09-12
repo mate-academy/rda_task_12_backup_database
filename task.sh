@@ -1,22 +1,37 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-# Читаємо змінні середовища
-USER="$DB_USER"
-PASS="$DB_PASSWORD"
+# Автоматичне видалення тимчасових файлів при виході
+trap 'rm -f "$FULL_DUMP" "$DATA_DUMP"' EXIT
+trap 'echo "[ERROR] Script failed at $(date)" >&2' ERR
 
-# Перевірка, що змінні встановлені
-if [[ -z "$USER" || -z "$PASS" ]]; then
-  echo "DB_USER або DB_PASSWORD не встановлені"
+# Перевірка змінних середовища
+if [[ -z "${DB_USER:-}" ]]; then
+  echo "Environment variable DB_USER is not set"
   exit 1
 fi
 
-# 1. Повний бекап ShopDB → відновлення в ShopDBReserve
-mysqldump -u"$USER" -p"$PASS" ShopDB > /tmp/shopdb_full.sql
-mysql -u"$USER" -p"$PASS" ShopDBReserve < /tmp/shopdb_full.sql
+if [[ -z "${DB_PASSWORD:-}" ]]; then
+  echo "Environment variable DB_PASSWORD is not set"
+  exit 1
+fi
 
-# 2. Бекап тільки даних ShopDB → відновлення в ShopDBDevelopment
-mysqldump -u"$USER" -p"$PASS" --no-create-info ShopDB > /tmp/shopdb_data.sql
-mysql -u"$USER" -p"$PASS" ShopDBDevelopment < /tmp/shopdb_data.sql
+# Створення тимчасових файлів
+FULL_DUMP=$(mktemp)
+DATA_DUMP=$(mktemp)
 
-echo "Backup & Restore завершено успішно."
+echo "$(date) - Starting full backup from ShopDB..."
+MYSQL_PWD="$DB_PASSWORD" mysqldump -u"$DB_USER" ShopDB \
+  | sed '/^USE /d' > "$FULL_DUMP"
+
+echo "$(date) - Restoring full backup to ShopDBReserve..."
+MYSQL_PWD="$DB_PASSWORD" mysql -u"$DB_USER" ShopDBReserve < "$FULL_DUMP"
+
+echo "$(date) - Starting data-only backup from ShopDB..."
+MYSQL_PWD="$DB_PASSWORD" mysqldump -u"$DB_USER" --no-create-info ShopDB \
+  | sed '/^USE /d' > "$DATA_DUMP"
+
+echo "$(date) - Restoring data-only backup to ShopDBDevelopment..."
+MYSQL_PWD="$DB_PASSWORD" mysql -u"$DB_USER" ShopDBDevelopment < "$DATA_DUMP"
+
+echo "$(date) - Backup & Restore completed successfully."
