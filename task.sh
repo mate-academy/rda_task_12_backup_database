@@ -12,8 +12,8 @@ DB_RESERVE="ShopDBReserve"
 DB_DEV="ShopDBDevelopment"
 
 echo "Creating full backup of $DB_PROD and restoring to $DB_RESERVE..."
-mysqldump -u"$DB_USER" -p"$DB_PASSWORD" --databases "$DB_PROD" > /tmp/full_backup.sql
-mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_RESERVE" < /tmp/full_backup.sql
+mysqldump -u"$DB_USER" -p"$DB_PASSWORD" ShopDB > /tmp/full_backup.sql
+mysql -u"$DB_USER" -p"$DB_PASSWORD" ShopDBReserve < /tmp/full_backup.sql
 
 echo "Creating data-only backup of $DB_PROD and restoring to $DB_DEV..."
 mysqldump -u"$DB_USER" -p"$DB_PASSWORD" --no-create-info "$DB_PROD" > /tmp/data_backup.sql
