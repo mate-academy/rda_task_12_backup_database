@@ -1,59 +1,79 @@
-#! /bin/bash
+#!/bin/bash
 
-set -e
+set -euo pipefail  
+IFS=$'\n\t'
 
-DB_USER=${DB_USER}
-DB_PASSWORD=${DB_PASSWORD}
+# ----------- ПЕРЕВІРКА ЗМІННИХ СЕРЕДОВИЩА -----------
+if [[ -z "${DB_USER:-}" || -z "${DB_PASSWORD:-}" ]]; then
+  echo "❌ Помилка: змінні середовища DB_USER і DB_PASSWORD мають бути встановлені."
+  echo "Використай команди: export DB_USER='ім'я_користувача' і export DB_PASSWORD='пароль'"
+  exit 1
+fi
 
-# Database names
+# ----------- НАЛАШТУВАННЯ -----------
 PROD_DB="ShopDB"
 RESERVE_DB="ShopDBReserve"
 DEV_DB="ShopDBDevelopment"
 
-# Timestamp for backup file name
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-
-# Temporary file names
 FULL_BACKUP_FILE="/tmp/${PROD_DB}_full_${TIMESTAMP}.sql"
 DATA_BACKUP_FILE="/tmp/${PROD_DB}_data_${TIMESTAMP}.sql"
 
-# MySQL command shortcut
-MYSQL_CMD="mysql -u${DB_USER} -p${DB_PASSWORD}"
-MYSQLDUMP_CMD="mysqldump -u${DB_USER} -p${DB_PASSWORD}"
+# Використовуємо тимчасовий конфіг MySQL замість передачі пароля у відкритому вигляді
+MYSQL_CNF="/tmp/.mysql_secure.cnf"
+cat > "$MYSQL_CNF" <<EOF
+[client]
+user=${DB_USER}
+password=${DB_PASSWORD}
+EOF
+chmod 600 "$MYSQL_CNF"
+
+MYSQL_CMD="mysql --defaults-extra-file=$MYSQL_CNF"
+MYSQLDUMP_CMD="mysqldump --defaults-extra-file=$MYSQL_CNF"
 
 echo "=========================================="
-echo " Starting nightly backup process..."
-echo " Time: $(date)"
+echo " Початок нічного резервного копіювання..."
+echo " Час: $(date)"
 echo "=========================================="
 
-# ----------- STEP 1: Full Backup and Restore to ShopDBReserve -----------
-echo "[1/2] Creating full backup of ${PROD_DB} and restoring to ${RESERVE_DB}..."
+# ----------- КРОК 1: Повне резервне копіювання та відновлення у ShopDBReserve -----------
+echo "[1/3] Створення повної резервної копії ${PROD_DB} і відновлення у ${RESERVE_DB}..."
 
-# Create a full dump (schema + data)
-$MYSQLDUMP_CMD --routines --triggers --events $PROD_DB > $FULL_BACKUP_FILE
-
-# Restore to reserve DB
+$MYSQLDUMP_CMD --routines --triggers --skip-events $PROD_DB > $FULL_BACKUP_FILE
 $MYSQL_CMD $RESERVE_DB < $FULL_BACKUP_FILE
 
-echo "✔ Full backup successfully restored to ${RESERVE_DB}"
+echo "✔ Повна резервна копія успішно відновлена у ${RESERVE_DB}"
 
-# ----------- STEP 2: Data-only Backup and Restore to ShopDBDevelopment -----------
-echo "[2/2] Creating data-only backup of ${PROD_DB} and restoring to ${DEV_DB}..."
+# ----------- КРОК 2: Резервна копія лише даних -----------
+echo "[2/3] Створення копії лише даних із ${PROD_DB}..."
 
-# Create a dump with data only (no schema)
 $MYSQLDUMP_CMD --no-create-info $PROD_DB > $DATA_BACKUP_FILE
+echo "✔ Копію даних створено успішно"
 
-# Restore only data to development DB
+# ----------- КРОК 3: Очищення та відновлення у ShopDBDevelopment -----------
+echo "[3/3] Відновлення даних у ${DEV_DB} (очищення старих даних перед імпортом)..."
+
+# Вимикаємо зовнішні ключі, щоб уникнути конфліктів
+$MYSQL_CMD $DEV_DB -e "SET FOREIGN_KEY_CHECKS=0;"
+
+# Очищаємо всі таблиці в базі розробки
+TABLES=$($MYSQL_CMD -N -e "SHOW TABLES IN ${DEV_DB};")
+for T in $TABLES; do
+  $MYSQL_CMD $DEV_DB -e "TRUNCATE TABLE \`${T}\`;"
+done
+
+$MYSQL_CMD $DEV_DB -e "SET FOREIGN_KEY_CHECKS=1;"
+
+# Імпортуємо нові дані
 $MYSQL_CMD $DEV_DB < $DATA_BACKUP_FILE
+echo "✔ Дані успішно відновлені у ${DEV_DB}"
 
-echo "✔ Data-only backup successfully restored to ${DEV_DB}"
-
-# ----------- CLEANUP -----------
-echo "Cleaning up temporary files..."
-rm -f $FULL_BACKUP_FILE $DATA_BACKUP_FILE
+# ----------- ОЧИЩЕННЯ -----------
+echo "Очищення тимчасових файлів..."
+rm -f $FULL_BACKUP_FILE $DATA_BACKUP_FILE $MYSQL_CNF
 
 echo "=========================================="
-echo " Backup and restore completed successfully!"
-echo " Finished at: $(date)"
+echo "✅ Резервне копіювання та відновлення виконано успішно!"
+echo " Завершено о: $(date)"
 echo "=========================================="
 
