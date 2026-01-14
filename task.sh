@@ -1,6 +1,4 @@
 #! /bin/bash
-read DB_USER
-read DB_PASSWORD
 
 mysqldump -u $DB_USER -p$DB_PASSWORD ShopDB > ShopDB.sql
 mysql -u $DB_USER -p$DB_PASSWORD ShopDBReserve < ShopDB.sql
