@@ -2,24 +2,24 @@
 set -euo pipefail
 
 if [ -z "${DB_USER:-}" ] || [ -z "${DB_PASSWORD:-}" ]; then
-    echo "Error: DB_USER and DB_PASSWORD environment variables must be set."
+    echo "Credentials missing"
     exit 1
 fi
 
-# Ensure target databases exist
-mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ShopDBReserve;"
-mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ShopDBDevelopment;"
+mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "USE ShopDB" > /dev/null 2>&1 || {
+    echo "ShopDB inaccessible"
+    exit 1
+}
 
-# Backup ShopDB to ShopDBReserve
-# Use sed to remove any USE statements to ensure the import targets ShopDBReserve
-mysqldump -u "$DB_USER" -p"$DB_PASSWORD" ShopDB | sed 's/^USE `ShopDB`;//' | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBReserve
-
-# Backup ShopDB data to ShopDBDevelopment
-# First ensure the schema exists if it is missing (required for --no-create-info imports)
 if ! mysql -u "$DB_USER" -p"$DB_PASSWORD" -e "DESCRIBE ShopDBDevelopment.Products" > /dev/null 2>&1; then
-    echo "Schema missing in ShopDBDevelopment. Importing schema..."
-    mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --no-data ShopDB | sed 's/^USE `ShopDB`;//' | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
+    echo "Schema missing"
+    exit 1
 fi
 
-# Import data only
-mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --no-create-info ShopDB | sed 's/^USE `ShopDB`;//' | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
+mysqldump -u "$DB_USER" -p"$DB_PASSWORD" ShopDB \
+    | sed -E '/^[[:space:]]*USE[[:space:]]+/Id;/^[[:space:]]*CREATE[[:space:]]+DATABASE[[:space:]]+/Id;/^[[:space:]]*DROP[[:space:]]+DATABASE[[:space:]]+/Id' \
+    | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBReserve
+
+mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --no-create-info ShopDB \
+    | sed -E '/^[[:space:]]*USE[[:space:]]+/Id;/^[[:space:]]*CREATE[[:space:]]+DATABASE[[:space:]]+/Id;/^[[:space:]]*DROP[[:space:]]+DATABASE[[:space:]]+/Id' \
+    | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
