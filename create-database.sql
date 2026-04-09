@@ -133,6 +133,8 @@ INSERT INTO Products (Name)
 -- create databases where data should be restored 
 
 CREATE DATABASE ShopDBReserve; 
+USE ShopDBReserve;
+
 
 CREATE DATABASE ShopDBDevelopment; 
 USE ShopDBDevelopment; 
