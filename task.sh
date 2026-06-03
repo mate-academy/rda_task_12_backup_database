@@ -1,7 +1,4 @@
 #! /bin/bash
 
-DB_USER=$1
-export DB_PASSWORD=$2
-
-mysqldump -u "$DB_USER" ShopDB | mysql -u "$DB_USER" ShopDBReserve
-mysqldump -u "$DB_USER" --no-create-info ShopDB | mysql -u "$DB_USER" ShopDBDevelopment
+mysqldump -u "$DB_USER" -p"$DB_PASSWORD" ShopDB | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBReserve
+mysqldump -u "$DB_USER" -p"$DB_PASSWORD" --no-create-info ShopDB | mysql -u "$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
