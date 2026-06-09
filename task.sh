@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 set -e
 
 mysqldump --user=$DB_USER --password=$DB_PASSWORD ShopDB --no-create-db > backup-no-create-db.sql
