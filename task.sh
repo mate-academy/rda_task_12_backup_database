@@ -23,16 +23,16 @@ echo "Creating a full backup (schema + data) of $prod_database_name"
 mysqldump -u "$DB_USER" -p"$DB_PASSWORD" "$prod_database_name" \
 --no-create-db --result-file="$backup_path/$full_backup_name" 2> /dev/null
 
-# Archive the previous data-only backup (if any) before creating a new one
-if [ -f "$backup_path/$data_backup_name" ]; then
-    mv "$backup_path/$data_backup_name" "$backup_path/$data_backup_name.old"
-fi
-
 if [ $? -ne 0 ]; then
     echo "Error: full backup of $prod_database_name failed"
     exit 1
 fi
 echo "Full backup created successfully"
+
+# Archive the previous data-only backup (if any) before creating a new one
+if [ -f "$backup_path/$data_backup_name" ]; then
+    mv "$backup_path/$data_backup_name" "$backup_path/$data_backup_name.old"
+fi
 
 echo "Creating a data-only backup (no schema) of $prod_database_name"
 mysqldump -u "$DB_USER" -p"$DB_PASSWORD" "$prod_database_name" \
