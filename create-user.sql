@@ -1,6 +1,6 @@
 CREATE USER 'backup'@'%' IDENTIFIED BY 'P@ssw0rd';
 
--- configure minimum requored permissions for performing a db backup using mysqldump: 
+-- configure minimum requored permissions for performing a db backup using mysqldump:
 GRANT SELECT, LOCK TABLES, SHOW VIEW, PROCESS ON *.* TO 'backup'@'%';
 
 -- configure required permissions to restore a database 
