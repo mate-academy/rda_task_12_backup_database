@@ -7,7 +7,7 @@ CREATE TABLE Products (
     PRIMARY KEY (ID)
 );
 
--- Create test data in Products table 
+-- Create test data in Products table
 INSERT INTO Products (Name)
 	VALUES ('AwersomeProduct1'); 
 INSERT INTO Products (Name)
