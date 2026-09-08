@@ -10,10 +10,5 @@ fi
 # 1. Full database backup of ShopDB restored to ShopDBReserve
 mysqldump -u"$DB_USER" -p"$DB_PASSWORD" ShopDB | mysql -u"$DB_USER" -p"$DB_PASSWORD" ShopDBReserve
 
-# 2. Full backup + data-only backup of ShopDB (no schema) restored to ShopDBDevelopment
-
-# 2.1 Create full backup with creating tables
-mysqldump -u"$DB_USER" -p"$DB_PASSWORD" ShopDB | mysql -u"$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
-
-# 2.2 Just INSERT values to the table
+# 2. Only data-only backup of ShopDB (no schema) restored to ShopDBDevelopment: just INSERT values to the table
 mysqldump -u"$DB_USER" -p"$DB_PASSWORD" --no-create-info ShopDB | mysql -u"$DB_USER" -p"$DB_PASSWORD" ShopDBDevelopment
