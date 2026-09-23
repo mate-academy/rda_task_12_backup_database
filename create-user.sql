@@ -7,4 +7,6 @@ GRANT SELECT, LOCK TABLES, SHOW VIEW, PROCESS ON *.* TO 'backup'@'%';
 GRANT ALL ON ShopDBReserve.* TO 'backup'@'%';
 
 -- configure required permissions to restore only data
-GRANT INSERT, LOCK TABLES, ALTER ON ShopDBDevelopment.* TO 'backup'@'%';
+GRANT INSERT, LOCK TABLES, ALTER, DROP ON ShopDBDevelopment.* TO 'backup'@'%';
+
+FLUSH PRIVILEGES;
