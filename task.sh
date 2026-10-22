@@ -6,7 +6,7 @@ SOURCE_DB="ShopDB"
 RESERVE_DB="ShopDBReserve"
 DEVELOPMENT_DB="ShopDBDevelopment"
 
-if [[ -z "${mateuser:-}" || -z "${qwerty:-}" ]]; then
+if [[ -z "${DB_USER:-}" || -z "${DB_PASSWORD:-}" ]]; then
   echo "Error: set both DB_USER and DB_PASSWORD environment variables." >&2
   exit 1
 fi
@@ -35,8 +35,8 @@ trap cleanup EXIT
 
 {
   printf '[client]\nuser="%s"\npassword="%s"\n' \
-    "$(escape_option_value "$mateuser")" \
-    "$(escape_option_value "$qwerty")"
+    "$(escape_option_value "$DB_USER")" \
+    "$(escape_option_value "$DB_PASSWORD")"
 } > "$credentials_file"
 
 echo "Creating full backup of $SOURCE_DB and restoring it to $RESERVE_DB..."
